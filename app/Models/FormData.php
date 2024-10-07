@@ -20,6 +20,7 @@ class FormData extends Model
         'message',
         'frequency',
     ];
+    
 
 }
 

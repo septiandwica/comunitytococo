@@ -25,7 +25,7 @@ return new class extends Migration
 
             // Kolom untuk bulk order
             $table->integer('bulk_quantity')->nullable(); // Jumlah yang dibeli (hanya berlaku untuk bulk order)
-
+            $table->integer('points')->default(0); 
             // Kolom umum lainnya
             $table->json('product_try'); // Produk yang ingin dicoba selanjutnya (disimpan dalam format JSON)
             $table->text('message')->nullable(); // Pesan dari pelanggan
