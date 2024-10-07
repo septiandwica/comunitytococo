@@ -101,7 +101,7 @@ class ContributionController extends Controller
         
         // Mengambil data dari API eksternal
         try {
-            $response = Http::get('http://tococoindonesia.com/blogs'); // Ganti dengan endpoint API yang sesuai
+            $response = Http::get('https://tococoindonesia.com/blogs'); // Ganti dengan endpoint API yang sesuai
             return $response->json(); // Kembalikan data yang diambil
         } catch (\Exception $e) {
             // Tangani error jika terjadi
