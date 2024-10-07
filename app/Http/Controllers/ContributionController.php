@@ -14,12 +14,12 @@ class ContributionController extends Controller
     {
         // Ambil data form berdasarkan ID
         $formData = FormData::findOrFail($id);
-
+    
         // Hitung total penjualan dari semua pelanggan (single dan bulk)
         $totalSingleSales = FormData::where('customer_type', 'single')->count(); // Total semua single purchases
         $totalBulkSales = FormData::where('customer_type', 'bulk')->sum('bulk_quantity'); // Total grosir
         $totalSales = $totalSingleSales + $totalBulkSales; // Gabungkan total dari single dan bulk
-
+    
         // Hitung kontribusi pelanggan saat ini
         if ($totalSales > 0) {
             if ($formData->customer_type === 'single') {
@@ -32,44 +32,44 @@ class ContributionController extends Controller
         } else {
             $contributionPercentage = 0;
         }
-
+    
         // Tentukan peringkat loyalitas berdasarkan kontribusi
         $loyaltyRank = $this->calculateLoyaltyRank($contributionPercentage);
-
-        // Ambil semua data form dan kelompokkan berdasarkan email dan nama
+    
+        // Ambil semua data form dan kelompokkan berdasarkan email dan nama, tanpa duplikat
         $customerContributions = FormData::select('email', 'name', 'points')
             ->selectRaw('SUM(CASE WHEN customer_type = "single" THEN 1 ELSE 0 END) AS single_count')
             ->selectRaw('SUM(CASE WHEN customer_type = "bulk" THEN bulk_quantity ELSE 0 END) AS bulk_count')
-            ->groupBy('email', 'name', 'points') // Group by email and name to ensure that name is included
+            ->groupBy('email', 'name', 'points') // Group by email, name, dan points untuk menghindari duplikasi
             ->get();
-
-        // Hitung total kontribusi untuk setiap email
+    
+        // Hitung total kontribusi untuk setiap email tanpa duplikat
         $customersWithContribution = [];
         foreach ($customerContributions as $customer) {
             $totalCustomerSales = $customer->single_count + $customer->bulk_count;
-
+    
             if ($totalSales > 0) {
                 $customerContribution = ($totalCustomerSales / $totalSales) * 100;
-                $customersWithContribution[] = [
+                $customersWithContribution[$customer->email] = [ // Gunakan email sebagai kunci unik untuk menghindari duplikasi
                     'email' => $customer->email,
                     'name' => $customer->name,
-                    'points' => $customer->points, // Ambil nama pelanggan
+                    'points' => $customer->points,
                     'contribution' => $customerContribution,
                     'loyaltyRank' => $this->calculateLoyaltyRank($customerContribution)
                 ];
             }
         }
-
+    
         // Sort by contribution and take the top 3
         usort($customersWithContribution, function($a, $b) {
             return $b['contribution'] <=> $a['contribution'];
         });
-
+    
         $top3Customers = array_slice($customersWithContribution, 0, 3);
-
+    
         // Fetch external data
         $externalData = $this->fetchExternalData(); // Call method to fetch external data
-        // dd($externalData);
+    
         // Kirim data ke view
         return view('contribution', [
             'formData' => $formData,
@@ -79,7 +79,7 @@ class ContributionController extends Controller
             'externalData' => $externalData, // Pass external data to the view
         ]);
     }
-
+    
     // Fungsi untuk menghitung peringkat loyalitas
     private function calculateLoyaltyRank($contributionPercentage)
     {
@@ -101,7 +101,7 @@ class ContributionController extends Controller
         
         // Mengambil data dari API eksternal
         try {
-            $response = Http::get('http://127.0.0.1:8001/blogs'); // Ganti dengan endpoint API yang sesuai
+            $response = Http::get('http://tococoindonesia.com/blogs'); // Ganti dengan endpoint API yang sesuai
             return $response->json(); // Kembalikan data yang diambil
         } catch (\Exception $e) {
             // Tangani error jika terjadi
