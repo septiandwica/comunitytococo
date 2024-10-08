@@ -79,7 +79,6 @@ if ($request->input('customer-type') === 'bulk') {
 }
 
 $formData->product_try = json_encode($request->input('producttry'));
-$formData->message = $request->input('message');
 $formData->frequency = $request->input('frequency');
 $formData->points = $points; // Menyimpan poin ke database
 
