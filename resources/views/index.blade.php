@@ -8,12 +8,6 @@
         @vite(['resources/css/app.css','resources/js/app.js'])
     </head>
     <body>
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-
-        </div>
-        @endif
 
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full max-w-[550px] bg-white">

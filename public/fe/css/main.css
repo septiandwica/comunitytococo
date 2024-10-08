@@ -2127,7 +2127,7 @@ ol {
   font-weight: 700;
   font-size: 35px;
   line-height: 52px;
-  color: #fff;
+  color: black;
   text-transform: capitalize;
 }
 
@@ -2148,9 +2148,9 @@ ol {
 
 .hero-area .hero-content p {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 28px;
-  color: #fff;
+  color: black;
   margin-top: 20px;
 }
 
@@ -2169,9 +2169,9 @@ ol {
 }
 
 .hero-area .hero-content h5 {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
-  color: #fff;
+  color: black;
   margin-top: 20px;
 }
 
