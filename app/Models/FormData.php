@@ -17,7 +17,6 @@ class FormData extends Model
         'productbuy',
         'bulk_quantity',
         'producttry',
-        'message',
         'frequency',
     ];
     

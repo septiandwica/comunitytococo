@@ -28,7 +28,6 @@ class FormController extends Controller
         'productbuy' => 'nullable|string|in:tococochips,alcoco,copa,cocofe',
         'bulk-quantity' => 'nullable|integer|min:10',
         'producttry.*' => 'nullable|string|in:tococochips,alcoco,copa,cocofe',
-        'message' => 'nullable|string|max:1000',
         'frequency' => 'required|in:weekly,monthly,new-product'
     ]);
 

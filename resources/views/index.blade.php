@@ -211,18 +211,7 @@
                         <div class="error">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-5">
-                        <label for="message" class="mb-3 block text-base font-medium text-[#07074D]">Pesan</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            placeholder="Sampaikan harapan Kamu bagi kesejahteraan petani kelapa binaan Tococo Indonesia melalui kontribusi ini...."
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                            rows="5">{{ old('message') }}</textarea>
-                        @error('message')
-                        <div class="error">{{ $message }}</div>
-                        @enderror
-                    </div>
+                 
                     <div class="mb-5 flex " id="agree">
                         <input
                             type="checkbox"

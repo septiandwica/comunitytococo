@@ -28,7 +28,6 @@ return new class extends Migration
             $table->integer('points')->default(0); 
             // Kolom umum lainnya
             $table->json('product_try'); // Produk yang ingin dicoba selanjutnya (disimpan dalam format JSON)
-            $table->text('message')->nullable(); // Pesan dari pelanggan
             $table->enum('frequency', ['weekly', 'monthly', 'new-product']); // Frekuensi komunikasi yang diinginkan
             $table->timestamps(); // Waktu created_at dan updated_at
         });
