@@ -210,7 +210,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css
                         <!-- Rekomendasi Produk 1 -->
 
                         <div class="single-service">
-                            <img src="{{ asset('fe/images/products/tococoori.jpeg')}}" alt="">
+                            <img src="{{ url('https://tococoindonesia.com/upload/products/' . $product['product_img_1']) }}" alt="">
                             <h4 class="text-title">{{ $product['product_name'] }}
                                 -
                                 {{ $product['product_varian'] }}</h4>
