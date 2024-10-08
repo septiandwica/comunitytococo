@@ -88,7 +88,6 @@ $formData->save();
 
 // Redirect atau response
 $whatsappNumber = '+6281392385176'; // Ganti dengan nomor WhatsApp yang sesuai
-$points = 100; // Ganti dengan jumlah poin yang didapat
 
 return redirect()->route('contribution.show', ['id' => $formData->id])
     ->with('success', [
