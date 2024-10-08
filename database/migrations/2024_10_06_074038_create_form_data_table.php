@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('bulk_quantity')->nullable(); // Jumlah yang dibeli (hanya berlaku untuk bulk order)
             $table->integer('points')->default(0); 
             // Kolom umum lainnya
+            $table->integer('total_points')->default(0);
             $table->json('product_try'); // Produk yang ingin dicoba selanjutnya (disimpan dalam format JSON)
             $table->enum('frequency', ['weekly', 'monthly', 'new-product']); // Frekuensi komunikasi yang diinginkan
             $table->timestamps(); // Waktu created_at dan updated_at

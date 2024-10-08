@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FormData;
 use GuzzleHttp\Client; // Import Guzzle client
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class ContributionController extends Controller
@@ -35,7 +36,19 @@ class ContributionController extends Controller
         $loyaltyRank = $this->calculateLoyaltyRank($formData->points);
 
         // Get the top 3 customers (for demonstration, we will fetch from the same table)
-        $top3Customers = FormData::orderBy('points', 'desc')->take(3)->get();
+        $top3Customers = FormData::select('form_data.name', 'form_data.email', 'subquery.max_points')
+        ->from(function ($query) {
+            $query->select('email', DB::raw('max(total_points) as max_points'))
+                ->from('form_data')
+                ->groupBy('email');
+        }, 'subquery')
+        ->join('form_data', function($join) {
+            $join->on('form_data.email', '=', 'subquery.email')
+                 ->on('form_data.total_points', '=', 'subquery.max_points');
+        })
+        ->orderBy('subquery.max_points', 'desc')
+        ->take(3)
+        ->get();
 
         
         return view('contribution', [
