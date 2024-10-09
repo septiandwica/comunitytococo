@@ -35,20 +35,18 @@ class ContributionController extends Controller
         // Calculate loyalty rank based on points
         $loyaltyRank = $this->calculateLoyaltyRank($formData->points);
 
-        // Get the top 3 customers (for demonstration, we will fetch from the same table)
-        $top3Customers = FormData::select('form_data.name', 'form_data.email', 'subquery.max_points')
-        ->from(function ($query) {
-            $query->select('email', DB::raw('max(total_points) as max_points'))
-                ->from('form_data')
-                ->groupBy('email');
-        }, 'subquery')
-        ->join('form_data', function($join) {
-            $join->on('form_data.email', '=', 'subquery.email')
-                 ->on('form_data.total_points', '=', 'subquery.max_points');
-        })
-        ->orderBy('subquery.max_points', 'desc')
-        ->take(3)
-        ->get();
+       // Get the top 3 customers
+$top3Customers = FormData::select('form_data.name', 'form_data.email', 'form_data.total_points')
+->join(DB::raw('(SELECT email, MAX(total_points) as max_points 
+                 FROM form_data 
+                 GROUP BY email) as subquery'), function($join) {
+    $join->on('form_data.email', '=', 'subquery.email')
+         ->on('form_data.total_points', '=', 'subquery.max_points');
+})
+->orderBy('subquery.max_points', 'desc')
+->take(3)
+->get();
+
 
         
         return view('contribution', [

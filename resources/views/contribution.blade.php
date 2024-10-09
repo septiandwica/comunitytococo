@@ -180,7 +180,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css
 
                                     <h4>{{ $customer->name }}</h4>
                                     <p>Poin:
-                                        {{ number_format($formData->total_points, 0) }}
+                                        {{ number_format($customer->total_points, 0) }}
                                         Points</p>
                                     <p>Peringkat:
                                         {{ $loyaltyRank }}</p>
